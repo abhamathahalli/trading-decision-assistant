@@ -23,8 +23,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("📈 Trading Decision Assistant")
+st.title("📈 AI Trading Decision Assistant — Decision Support Prototype")
 st.caption("Decision-support prototype (not financial advice). Upload OHLCV data → indicators → signal + reasoning.")
+st.markdown("""
+This interactive decision-support prototype allows users to upload OHLCV financial data,
+compute technical indicators (Moving Averages, RSI, Volatility), and generate interpretable trading signals.
+
+It demonstrates applied data analysis, feature engineering, and decision reasoning in an interactive product.
+
+**Educational purpose only — not financial advice.**
+""")
+st.markdown("Source code: https://github.com/abhamathahalli/trading-decision-assistant")
 
 # Sidebar controls
 st.sidebar.header("⚙️ Settings")
