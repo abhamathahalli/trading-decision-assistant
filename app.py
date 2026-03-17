@@ -151,3 +151,29 @@ with tab2:
 with tab3:
     st.subheader("Cleaned data preview")
     st.dataframe(df.tail(200), use_container_width=True)
+    # --- AI Multi-Call Analysis Section ---
+st.markdown("---")
+st.subheader("🤖 AI Multi-Call Trade Analyst")
+
+api_key = st.text_input("Enter Groq API Key", type="password", key="anthropic_key")
+
+if st.button("Run AI Analysis"):
+    if api_key and df is not None:
+        indicators_summary = {
+            "last_rsi": round(float(df['RSI'].iloc[-1]), 2),
+            "last_close": round(float(df['Close'].iloc[-1]), 2),
+            "ma_crossover": "bullish" if df['MA_fast'].iloc[-1] > df['MA_slow'].iloc[-1] else "bearish",
+            "volatility": round(float(df['Volatility'].iloc[-1]), 4)
+        }
+
+        with st.spinner("Running multi-call LLM analysis..."):
+            from llm_analyst import multi_call_analysis
+            result = multi_call_analysis(df, indicators_summary, fast_window, slow_window, api_key)
+
+        st.markdown("### 📊 Backtest Results")
+        st.json(result['backtest'])
+
+        st.markdown("### 📝 AI Report")
+        st.markdown(result['report'])
+    else:
+        st.warning("Please upload a CSV and enter your API key first.")
